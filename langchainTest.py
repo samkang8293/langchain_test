@@ -6,6 +6,10 @@ from langchain.schema import (
 )
 from langchain.chat_models import ChatOpenAI
 from langchain import PromptTemplate
+from langchain.chains import (
+    LLMChain,
+    SimpleSequentialChain
+)
 
 load_dotenv(find_dotenv())
 
@@ -30,3 +34,18 @@ prompt = PromptTemplate(
 
 llm(prompt.format(concept="autoencoder"))
 llm(prompt.format(concept="regularization"))
+
+chain = LLMChain(llm=llm, prompt=prompt)
+
+print(chain.run("autoencoder"))
+
+second_prompt = PromptTemplate(
+    input_variables=["ml_concept"],
+    template="Turn the concept description of {ml_concept} and explain it to me like I'm five in 500 words"
+)
+chain_two = LLMChain(llm=llm, prompt=second_prompt)
+
+overall_chain = SimpleSequentialChain(chains=[chain, chain_two], verbose=True)
+
+explanation = overall_chain.run("autoencoder")
+print(explanation)
