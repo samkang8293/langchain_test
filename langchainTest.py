@@ -5,6 +5,7 @@ from langchain.schema import (
     SystemMessage
 )
 from langchain.chat_models import ChatOpenAI
+from langchain import PromptTemplate
 
 load_dotenv(find_dotenv())
 
@@ -16,3 +17,16 @@ messages = [
 response = chat(messages)
 
 print(response.content, end='\n')
+
+template = """
+You are an expert data scientist with an expertise in building deep learning models.
+Explain the concept of {concept} in a couple of lines
+"""
+
+prompt = PromptTemplate(
+    input_variables = ["concept"],
+    template = template
+)
+
+llm(prompt.format(concept="autoencoder"))
+llm(prompt.format(concept="regularization"))
