@@ -22,7 +22,7 @@ from langchain.llms.openai import OpenAI
 
 load_dotenv(find_dotenv())
 
-chat = ChatOpenAI(model_name="gpt-4", temperature=0.3)
+chat = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.3)
 messages = [
     SystemMessage(content="You are an expert data scientist"),
     HumanMessage(content="Write a Python script that trains a neural network on simulated data")
